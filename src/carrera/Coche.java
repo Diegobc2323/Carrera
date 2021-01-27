@@ -10,12 +10,14 @@ public class Coche {
 	private final int potencia=50;
 	private int velocidad;
 	private int kmRecorridos;
+	private boolean jugador;
 
 
-	public Coche(String nombrePiloto, int dorsal) {
+	public Coche(String nombrePiloto, int dorsal, boolean jugador) {
 		super();
 		this.nombrePiloto = nombrePiloto;
 		this.dorsal = dorsal;
+		this.jugador = jugador;
 		this.estadoCoche="PARADO";
 		this.velocidad=0;
 		this.kmRecorridos=0;

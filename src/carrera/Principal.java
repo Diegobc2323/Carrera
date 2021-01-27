@@ -21,7 +21,7 @@ public class Principal {
 	
 	public static void main(String[] args) {
 		
-		Coche car = new Coche("Yo", 23);
+		Coche car = new Coche("Yo", 23, true);
 		int opc=0;
 		
 		
