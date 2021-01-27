@@ -61,18 +61,49 @@ public class Coche {
 	
 	public void arrancar() {
 		
-		this.setEstadoCoche("MARCHA");
+		if (this.getEstadoCoche().equals("PARADO")) {
+			this.setEstadoCoche("MARCHA");
+		}else {
+			System.out.println("Tu coche ya esta en marcha, has perdido este turno");
+		}
+		
 	}
 
 	public void acelerar() {
 		
-		if (this.getEstadoCoche().equals("MARCHA")) {
+		switch (this.getEstadoCoche()) {
+		
+		case "PARADO":
+			System.out.println("Para acelerar, primero debes arrancar el coche");
+			break;
+		
+		case "MARCHA":
 			double random = Math.random()*this.potencia+1;
 			int acel = (int)Math.floor(random);
 			int vel=this.getVelocidad();
 			int km=this.getKmRecorridos();
 			
-			this.setVelocidad(vel+acel);
-		}	
+			vel+=acel;
+			if (vel>200) {
+				this.setVelocidad(0);
+				this.setEstadoCoche("ACCIDENTADO");
+			}else {
+				this.setVelocidad(vel);
+				this.setKmRecorridos(km+vel);
+			}
+			break;
+			
+		case "ACCIDENTADO":
+			System.out.println("Para poder acelerar, debes rearrancar el coche");
+			break;
+			
+		case "TERMINADO":
+			System.out.println("Ya has terminado la carrera");
+			break;
+		}
+		
+		
+			
+			
 	}
 }

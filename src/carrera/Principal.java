@@ -22,7 +22,7 @@ public class Principal {
 	public static void main(String[] args) {
 		
 		Coche car = new Coche("Yo", 23);
-		int opc=0, km=car.getKmRecorridos();
+		int opc=0;
 		
 		
 		do {
