@@ -30,10 +30,11 @@ public class Principal {
 			switch (opc) {
 			case 1:
 				car.arrancar();
+				System.out.println();
 				break;
 			case 2:
-				
-				
+				car.acelerar();
+				System.out.println();
 				break;
 			case 3:
 				
@@ -43,7 +44,7 @@ public class Principal {
 				break;
 			}
 			
-		} while (car.getKmRecorridos()>=car.getDistanciaCarrera());
+		} while (car.getKmRecorridos()<=car.getDistanciaCarrera());
 
 	}
 

@@ -5,7 +5,7 @@ public class Coche {
 
 	private String nombrePiloto;
 	private int dorsal;
-	private final int distanciaCarrera=300;
+	private final int distanciaCarrera=1000;
 	private String estadoCoche;
 	private final int potencia=50;
 	private int velocidad;
@@ -61,10 +61,24 @@ public class Coche {
 	
 	public void arrancar() {
 		
-		if (this.getEstadoCoche().equals("PARADO")) {
+		
+		switch (this.estadoCoche) {
+		case "PARADO":
 			this.setEstadoCoche("MARCHA");
-		}else {
-			System.out.println("Tu coche ya esta en marcha, has perdido este turno");
+			System.out.println("Has arrancado el coche");
+			break;
+		case "MARCHA":
+			System.out.println("Tu coche ya esta en marcha, has perdido el turno");
+			break;
+			
+		case "ACCIDENTADO":
+			System.out.println("Tu coche esta accidentado, debes rearrancarlo en el turno siguiente");
+			break;
+			
+		case "TERMINADO":
+			System.out.println("Ya has terminado");
+			break;
+		
 		}
 		
 	}
@@ -87,10 +101,17 @@ public class Coche {
 			if (vel>200) {
 				this.setVelocidad(0);
 				this.setEstadoCoche("ACCIDENTADO");
+				System.out.println("Has superado los 200 km/h y te has accidentado");
+				System.out.println("Tu coche a recorrido "+this.getKmRecorridos()+" km hasta el momento, le faltan "+(this.getDistanciaCarrera()-this.getKmRecorridos())+" para terminar la carrera");
+				
 			}else {
 				this.setVelocidad(vel);
 				this.setKmRecorridos(km+vel);
+				System.out.println("Tu coche a recorrido "+this.getKmRecorridos()+" km hasta el momento, le faltan "+(this.getDistanciaCarrera()-this.getKmRecorridos())+" para terminar la carrera");
+				System.out.println("Su velocidad actual es de "+this.getVelocidad()+" km/h");
+				
 			}
+			
 			break;
 			
 		case "ACCIDENTADO":
@@ -102,8 +123,5 @@ public class Coche {
 			break;
 		}
 		
-		
-			
-			
 	}
 }
