@@ -35,7 +35,7 @@ public class Carrera {
 			}
 			
 			if (dorsalRepetida) {
-				
+				//ESTOY AQUI
 			}
 			
 			System.out.println("Dime si el piloto "+(i+1)+" va a ser un jugador (responde con 'si' o 'no')");
