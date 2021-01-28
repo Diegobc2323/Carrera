@@ -26,17 +26,22 @@ public class Carrera {
 			nombrePiloto= leerTxt.nextLine();
 			
 			System.out.println("Dime el dorsal del piloto "+(i+1));
-			dorsal=leerNum.nextInt();
-			for (Coche c : vCoches) {
-				if (c.getDorsal()==dorsal) {
-					dorsalRepetida=true;
-					break;
-				}
-			}
 			
-			if (dorsalRepetida) {
-				//ESTOY AQUI
-			}
+			do {
+				dorsal=leerNum.nextInt();
+				for (Coche c : vCoches) {
+					if (c.getDorsal()==dorsal) {
+						dorsalRepetida=true;
+						break;
+					}
+				}
+				
+				if (dorsalRepetida) {
+					System.out.println("Esa dorsal ya esta en uso, por favor introduce otra que no lo este");
+				}
+			} while (dorsalRepetida==true);
+			
+			
 			
 			System.out.println("Dime si el piloto "+(i+1)+" va a ser un jugador (responde con 'si' o 'no')");
 			vCoches[i] = new Coche(nombrePiloto, dorsal, jugador);
