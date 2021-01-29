@@ -21,10 +21,16 @@ public class Principal {
 	
 	public static void main(String[] args) {
 		
-		Coche car = new Coche("Yo", 23, true);
+		Carrera c = new Carrera("La definitiva", 1000);
 		int opc=0;
 		
+		c.menuCarrera();
 		
+		
+		
+		
+		
+		/*
 		do {
 			opc=pintaMenu();
 			switch (opc) {
@@ -46,8 +52,8 @@ public class Principal {
 				break;
 			}
 			
-		} while (car.getKmRecorridos()<=car.getDistanciaCarrera());
-
+		} while (car.getKmRecorridos()<=car.getDISTANCIA_CARRERA());
+		 */
 	}
 
 }

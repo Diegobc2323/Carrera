@@ -5,48 +5,142 @@ import java.util.Scanner;
 public class Carrera {
 	
 	private String nombre;
+	int distCarrera;
 	Coche vCoches[];
 	
-	public Carrera(String nombre) {
+	public Carrera(String nombre, int distCarrera) {
 		super();
 		this.nombre = nombre;
+		this.distCarrera = distCarrera;
 		this.vCoches = new Coche[10];
 	}
 	
-	public void addCoches() {
-		for (int i = 0; i < vCoches.length; i++) {
-			Scanner leerTxt = new Scanner(System.in);
-			Scanner leerNum = new Scanner(System.in);
-			String nombrePiloto ="";
-			int dorsal=-99;
-			boolean jugador = false, dorsalRepetida=false;
+	
+	
+	public void menuCarrera() {
+		
+		int opc=0;
+		Scanner leer = new Scanner(System.in);
+		
+		do {
+			boolean posLibre=false;
 			
-			
-			System.out.println("Dime el nombre del piloto "+(i+1));
-			nombrePiloto= leerTxt.nextLine();
-			
-			System.out.println("Dime el dorsal del piloto "+(i+1));
-			
-			do {
-				dorsal=leerNum.nextInt();
-				for (Coche c : vCoches) {
-					if (c.getDorsal()==dorsal) {
-						dorsalRepetida=true;
-						break;
-					}
+			for (Coche coche : vCoches) {
+				if (coche==null) {
+					posLibre=true;
+					break;
 				}
-				
-				if (dorsalRepetida) {
-					System.out.println("Esa dorsal ya esta en uso, por favor introduce otra que no lo este");
-				}
-			} while (dorsalRepetida==true);
+			}
 			
 			
+			if (posLibre==false) {
+				System.out.println("ya no se pueden añadir mas pilotos");
+				opc=2;
+			} else {
+			System.out.println("Si quieres añadir un coche pulsa 1 \nSi quieres empezar ya la carrera pulsa 2");
+			opc = leer.nextInt();
+			}
 			
-			System.out.println("Dime si el piloto "+(i+1)+" va a ser un jugador (responde con 'si' o 'no')");
-			vCoches[i] = new Coche(nombrePiloto, dorsal, jugador);
-		}
+			
+			if (opc<1 || opc>2) {
+				System.out.println("Elige una opcion valida por favor\n\n");
+			}
+			
+			switch (opc) {
+			case 1:
+				addCoches();
+				break;
+
+			case 2:
+				empiezaCarrera();
+				break;
+			}
+			
+		} while ((opc<1 || opc>2));
+		
+		
+		
 	}
 	
 	
+	public void empiezaCarrera() {
+		boolean terminada = false;
+		
+		for (int i = 0; i < vCoches.length; i++) {
+			if (vCoches[i]!=null) {
+				vCoches[i].setEstadoCoche("MARCHA");
+			}
+		}
+		
+		do {
+			terminada = false;
+			
+			
+			
+			
+			
+			for (Coche coche : vCoches) {
+				if (coche!=null && coche.getEstadoCoche().equalsIgnoreCase("MARCHA")) {
+					terminada=true;
+				}
+			}
+		} while (terminada==false);
+		
+		System.out.println("La carrera a terminado");
+		
+	}
+	
+	
+	public void addCoches() {		
+		
+		String nombrePiloto = "", respuesta="";
+		int dorsal=-99;
+		boolean jugador = false, dorRepetida=false;
+		Scanner leerTxt = new Scanner(System.in);
+		Scanner leerNum = new Scanner(System.in);
+		
+			for (int i = 0; i < vCoches.length; i++) {
+				if (vCoches[i]==null) {
+					
+					do {
+						System.out.println("El nuevo piloto va a ser un jugador (responde con si o no)");
+						respuesta= leerTxt.nextLine();
+					} while (!(respuesta.equalsIgnoreCase("si")  || respuesta.equalsIgnoreCase("no")));
+					
+					if (respuesta.equalsIgnoreCase("si")) {
+						
+						jugador=true;
+						
+						System.out.println("Dime el nombre de tu piloto");
+						nombrePiloto= leerTxt.nextLine();
+						
+						
+						do {
+							dorRepetida=false;
+							System.out.println("Dime la dorsal que va a usar el piloto "+nombrePiloto);
+							dorsal=leerNum.nextInt();
+							
+							for (Coche coche : vCoches) {
+								if (coche!=null && coche.getDorsal()==dorsal) {
+									dorRepetida=true;
+									System.out.println("Esa dorsal ya esta en uso, por favor introduce otra");
+								}
+							}
+						} while (dorRepetida);
+						
+						vCoches[i]=new Coche(nombrePiloto, dorsal, jugador, this.distCarrera);
+						menuCarrera();
+					}else {
+						vCoches[i]= new Coche("piloto_"+(i+99), (i+99), false, this.distCarrera);
+						menuCarrera();
+					}
+				}
+			}
+		
+		}
+		
+		
 }
+	
+	
+

@@ -5,15 +5,15 @@ public class Coche {
 
 	private String nombrePiloto;
 	private int dorsal;
-	private final int distanciaCarrera=1000;
+	private int distanciaCarrera;
 	private String estadoCoche;
-	private final int potencia=50;
+	private final int POTENCIA=50;
 	private int velocidad;
 	private int kmRecorridos;
 	private boolean jugador;
 
 
-	public Coche(String nombrePiloto, int dorsal, boolean jugador) {
+	public Coche(String nombrePiloto, int dorsal, boolean jugador, int distanciaCarrera) {
 		super();
 		this.nombrePiloto = nombrePiloto;
 		this.dorsal = dorsal;
@@ -21,6 +21,7 @@ public class Coche {
 		this.estadoCoche="PARADO";
 		this.velocidad=0;
 		this.kmRecorridos=0;
+		this.distanciaCarrera=distanciaCarrera;
 	}
 
 
@@ -57,10 +58,20 @@ public class Coche {
 	public int getDistanciaCarrera() {
 		return distanciaCarrera;
 	}
-	public int getPotencia() {
-		return potencia;
+	public void setDistanciaCarrera(int distanciaCarrera) {
+		this.distanciaCarrera = distanciaCarrera;
 	}
-	
+	public int getPOTENCIA() {
+		return POTENCIA;
+	}
+	public boolean isJugador() {
+		return jugador;
+	}
+	public void setJugador(boolean jugador) {
+		this.jugador = jugador;
+	}
+
+
 	public void arrancar() {
 		
 		
@@ -94,7 +105,7 @@ public class Coche {
 			break;
 		
 		case "MARCHA":
-			double random = Math.random()*this.potencia+1;
+			double random = Math.random()*this.POTENCIA+1;
 			int acel = (int)Math.floor(random);
 			int vel=this.getVelocidad();
 			int km=this.getKmRecorridos();
@@ -138,7 +149,7 @@ public class Coche {
 			break;
 		
 		case "MARCHA":
-			double random = Math.random()*this.potencia+1;
+			double random = Math.random()*this.POTENCIA+1;
 			int freno = (int)Math.floor(random);
 			int vel=this.getVelocidad();
 			int km=this.getKmRecorridos();
