@@ -118,14 +118,18 @@ public class Coche {
 			}else {
 				this.setVelocidad(vel);
 				this.setKmRecorridos(km+vel);
-				System.out.println("Su velocidad actual es de "+this.getVelocidad()+" km/h");
+				
+				if (this.kmRecorridos>=this.distanciaCarrera) {
+					System.out.println("Felicidades, has acabado la carrera");
+					this.setEstadoCoche("TERMINADO");
+				}else {
+					System.out.println("Tu coche a recorrido "+this.getKmRecorridos()+" km hasta el momento, le faltan "+(this.getDistanciaCarrera()-this.getKmRecorridos())+" para terminar la carrera");
+					System.out.println("Su velocidad actual es de "+this.getVelocidad()+" km/h");
+				}
+				
 			}
 			
-			if (this.kmRecorridos>=this.distanciaCarrera) {
-				System.out.println("Felicidades, has acabado la carrera");
-			}else {
-				System.out.println("Tu coche a recorrido "+this.getKmRecorridos()+" km hasta el momento, le faltan "+(this.getDistanciaCarrera()-this.getKmRecorridos())+" para terminar la carrera");
-			}
+			
 			
 			break;
 			
@@ -162,8 +166,15 @@ public class Coche {
 			}else {
 				this.setVelocidad(vel);
 				this.setKmRecorridos(km+vel);
-				System.out.println("Tu coche a recorrido "+this.getKmRecorridos()+" km hasta el momento, le faltan "+(this.getDistanciaCarrera()-this.getKmRecorridos())+" para terminar la carrera");
-				System.out.println("Su velocidad actual es de "+this.getVelocidad()+" km/h");
+				
+				
+				if (this.kmRecorridos>=this.distanciaCarrera) {
+					System.out.println("Felicidades, has acabado la carrera");
+					this.setEstadoCoche("TERMINADO");
+				}else {
+					System.out.println("Tu coche a recorrido "+this.getKmRecorridos()+" km hasta el momento, le faltan "+(this.getDistanciaCarrera()-this.getKmRecorridos())+" para terminar la carrera");
+					System.out.println("Su velocidad actual es de "+this.getVelocidad()+" km/h");
+				}
 			}
 			break;
 			

@@ -63,8 +63,28 @@ public class Carrera {
 	}
 	
 	
+	
+	
+	public static int pintaMenu() {
+		int opc =0;
+		Scanner leer = new Scanner(System.in);
+		
+		do {
+			System.out.println("Pulsa 1 para acelerar");
+			System.out.println("Pulsa 2 para frenar");
+			System.out.println("Pulsa 3 para rearrancar");
+			opc = leer.nextInt();
+		} while (opc<1 || opc>3);
+		return opc;
+		
+		
+		
+		
+	}
+	
 	public void empiezaCarrera() {
 		boolean terminada = false;
+		int trueFalse=0, opc=0;
 		
 		for (int i = 0; i < vCoches.length; i++) {
 			if (vCoches[i]!=null) {
@@ -75,15 +95,51 @@ public class Carrera {
 		do {
 			terminada = false;
 			
-			
-			
-			
-			
-			for (Coche coche : vCoches) {
-				if (coche!=null && coche.getEstadoCoche().equalsIgnoreCase("MARCHA")) {
-					terminada=true;
+			for (int i = 0; i < vCoches.length; i++) {
+				if (vCoches[i]!=null) {
+					if (vCoches[i].isJugador()) {
+						trueFalse=1;
+					}else {
+						trueFalse=2;
+					}
+					
+					switch (trueFalse) {
+					case 1:
+						System.out.println("Turno de "+vCoches[i].getNombrePiloto());
+						
+						opc=pintaMenu();
+						switch (opc) {
+						case 1:
+							vCoches[i].acelerar();
+							System.out.println();
+							break;
+						case 2:
+							vCoches[i].frenar();
+							System.out.println();
+							break;
+						case 3:
+							vCoches[i].rearrancar();
+							System.out.println();
+							break;
+						}
+						break;
+	
+					case 2:
+						System.out.println("Piloto cpu con nombre "+vCoches[i].getNombrePiloto()+" y dorsal "+vCoches[i].getDorsal());
+						break;
+					}
 				}
-			}
+				
+			
+		
+			
+			
+				for (Coche coche : vCoches) {
+					if (coche!=null && coche.getEstadoCoche().equalsIgnoreCase("MARCHA")) {
+						terminada=true;
+					}
+				}
+				}
 		} while (terminada==false);
 		
 		System.out.println("La carrera a terminado");
