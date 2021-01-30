@@ -62,7 +62,17 @@ public class Carrera {
 		
 	}
 	
-	
+	public boolean poderRearrancar() {
+		
+		for (Coche coche : vCoches) {
+			
+			if (coche.getEstadoCoche().equalsIgnoreCase("TERMINADO")) {
+				return true;
+			}
+			
+		}
+		return false;
+	}
 	
 	
 	public static int pintaMenu() {
@@ -83,7 +93,7 @@ public class Carrera {
 	}
 	
 	public void empiezaCarrera() {
-		boolean terminada = false;
+		boolean terminada = true, romper=false;
 		int trueFalse=0, opc=0;
 		
 		for (int i = 0; i < vCoches.length; i++) {
@@ -104,42 +114,51 @@ public class Carrera {
 					}
 					
 					switch (trueFalse) {
-					case 1:
-						System.out.println("Turno de "+vCoches[i].getNombrePiloto());
-						
-						opc=pintaMenu();
-						switch (opc) {
 						case 1:
-							vCoches[i].acelerar();
-							System.out.println();
+							System.out.println("Turno de "+vCoches[i].getNombrePiloto());
+							
+							opc=pintaMenu();
+							switch (opc) {
+								case 1:
+									vCoches[i].acelerar();
+									System.out.println();
+									break;
+								case 2:
+									vCoches[i].frenar();
+									System.out.println();
+									break;
+								case 3:
+									if (poderRearrancar()) {
+										vCoches[i].rearrancar();
+										System.out.println();
+									} else {
+										System.out.println("no puedes rearrancar el coche porque ya hay alguien que ha acabado la carrera");
+									}
+									
+									break;
+							}
 							break;
+		
 						case 2:
-							vCoches[i].frenar();
-							System.out.println();
+								System.out.println("Piloto cpu con nombre "+vCoches[i].getNombrePiloto()+" y dorsal "+vCoches[i].getDorsal());
+								vCoches[i].setEstadoCoche("TERMINADO");
+								
 							break;
-						case 3:
-							vCoches[i].rearrancar();
-							System.out.println();
-							break;
-						}
-						break;
-	
-					case 2:
-						System.out.println("Piloto cpu con nombre "+vCoches[i].getNombrePiloto()+" y dorsal "+vCoches[i].getDorsal());
-						break;
 					}
 				}
-				
-			
-		
 			
 			
 				for (Coche coche : vCoches) {
 					if (coche!=null && coche.getEstadoCoche().equalsIgnoreCase("MARCHA")) {
-						terminada=true;
+						terminada=false;
+						romper=true;
+						break;
 					}
 				}
+				if (romper) {
+					break;
 				}
+			}
 		} while (terminada==false);
 		
 		System.out.println("La carrera a terminado");
