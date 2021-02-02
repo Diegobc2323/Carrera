@@ -18,8 +18,9 @@ public class Carrera {
 	
 	
 	public void menuCarrera() {
-		
+		System.out.println("Vienvenidos a la carrera '"+this.nombre+"'");
 		int opc=0;
+		boolean empezar=false;
 		Scanner leer = new Scanner(System.in);
 		
 		do {
@@ -49,10 +50,26 @@ public class Carrera {
 			switch (opc) {
 			case 1:
 				addCoches();
+				opc=3;
 				break;
 
 			case 2:
-				empiezaCarrera();
+				empezar = false;
+				for (Coche coche : vCoches) {
+					if (coche!=null) {
+						empezar=true;
+						break;
+					}
+				}
+				
+				if (empezar) {
+					empiezaCarrera();
+				}else {
+					System.out.println("necesitas aÃ±adir coches antes de empezar la carrera");
+					opc=3;
+				}
+				
+				
 				break;
 			}
 			
@@ -105,6 +122,7 @@ public class Carrera {
 		boolean terminada = false, romper=true;
 		int trueFalse=0, opc=0;
 		
+		//Arrancamos todos los coches
 		for (int i = 0; i < vCoches.length; i++) {
 			if (vCoches[i]!=null) {
 				vCoches[i].setEstadoCoche("MARCHA");
@@ -112,6 +130,8 @@ public class Carrera {
 		}
 		
 		do {
+			
+			
 			
 			for (int i = 0; i < vCoches.length; i++) {
 				if (vCoches[i]!=null) {
@@ -123,18 +143,58 @@ public class Carrera {
 					
 					switch (trueFalse) {
 						case 1:
-							System.out.println("Turno de "+vCoches[i].getNombrePiloto());
+			
+							if (!vCoches[i].getEstadoCoche().equalsIgnoreCase("TERMINADO")) {
+								System.out.println("Turno de "+vCoches[i].getNombrePiloto());
+								
+								opc=pintaMenu();
+								switch (opc) {
+									case 1:
+										vCoches[i].acelerar();
+										System.out.println();
+										break;
+									case 2:
+										vCoches[i].frenar();
+										System.out.println();
+										break;
+									case 3:
+										if (poderRearrancar()) {
+											vCoches[i].rearrancar();
+											System.out.println();
+										} else {
+											System.out.println("no puedes rearrancar el coche porque ya hay alguien que ha acabado la carrera");
+										}
+										
+										break;
+								}
+							}
 							
-							opc=pintaMenu();
-							switch (opc) {
+							
+							break;
+		
+						case 2:
+							if (!vCoches[i].getEstadoCoche().equalsIgnoreCase("TERMINADO")) {
+								System.out.println("Turno de "+vCoches[i].getNombrePiloto());
+								
+								if (vCoches[i].getEstadoCoche().equalsIgnoreCase("ACCIDENTADO")) {
+									opc=3;
+								} else if(vCoches[i].getVelocidad()==0) {
+									opc=1;
+								}else if (vCoches[i].getVelocidad()>180) {
+									opc=2;
+								}
+								
+								switch (opc) {
 								case 1:
 									vCoches[i].acelerar();
 									System.out.println();
 									break;
+
 								case 2:
 									vCoches[i].frenar();
 									System.out.println();
 									break;
+								
 								case 3:
 									if (poderRearrancar()) {
 										vCoches[i].rearrancar();
@@ -142,40 +202,7 @@ public class Carrera {
 									} else {
 										System.out.println("no puedes rearrancar el coche porque ya hay alguien que ha acabado la carrera");
 									}
-									
-									break;
 							}
-							break;
-		
-						case 2:
-							System.out.println("Turno de "+vCoches[i].getNombrePiloto());
-							
-							if (vCoches[i].getEstadoCoche().equalsIgnoreCase("ACCIDENTADO")) {
-								opc=3;
-							} else if(vCoches[i].getVelocidad()==0) {
-								opc=1;
-							}else if (vCoches[i].getVelocidad()>180) {
-								opc=2;
-							}
-							
-							switch (opc) {
-							case 1:
-								vCoches[i].acelerar();
-								System.out.println();
-								break;
-
-							case 2:
-								vCoches[i].frenar();
-								System.out.println();
-								break;
-							
-							case 3:
-								if (poderRearrancar()) {
-									vCoches[i].rearrancar();
-									System.out.println();
-								} else {
-									System.out.println("no puedes rearrancar el coche porque ya hay alguien que ha acabado la carrera");
-								}
 								break;
 							}
 					}
@@ -192,7 +219,7 @@ public class Carrera {
 		} while (terminada==false);
 		
 		System.out.println("La carrera a terminado");
-		System.exit(0);
+		
 		
 	}
 	
@@ -235,12 +262,14 @@ public class Carrera {
 						} while (dorRepetida);
 						
 						vCoches[i]=new Coche(nombrePiloto, dorsal, jugador, this.distCarrera);
-						System.out.println("el piloto "+nombrePiloto+" ha sido añadido");
-						menuCarrera();
+						System.out.println("el piloto "+nombrePiloto+" ha sido aï¿½adido\n");
+						break;
+					//	menuCarrera();
 					}else {
 						vCoches[i]= new Coche("piloto_"+(i+99), (i+99), false, this.distCarrera);
-						System.out.println("el piloto "+vCoches[i].getNombrePiloto()+" ha sido añadido");
-						menuCarrera();
+						System.out.println("el piloto "+vCoches[i].getNombrePiloto()+" ha sido aï¿½adido\n");
+						break;
+					//	menuCarrera();
 					}
 				}
 			}
